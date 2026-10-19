@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { randomUUID } from 'crypto';
+import { DeliveryStore, DeliveryStatus } from './domain.js';
 
 export class AppError extends Error {
   constructor(
@@ -13,9 +14,15 @@ export class AppError extends Error {
   }
 }
 
-export function createApp() {
+export interface AppOptions {
+  store?: DeliveryStore;
+}
+
+export function createApp(options?: AppOptions) {
   const app = express();
   app.use(express.json());
+
+  const store = options?.store || new DeliveryStore();
 
   // Request ID middleware
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -34,15 +41,47 @@ export function createApp() {
     res.status(200).json({ status: 'ready', service: 'delivery-service' });
   });
 
-  // API Stub
-  app.get('/api/delivery/:orderId', (req: Request, res: Response) => {
-    res.status(200).json({
-      orderId: req.params.orderId,
-      status: 'PLACED',
-      estimatedDeliveryMinutes: 30,
-      simulated: true,
-      updatedAt: new Date().toISOString()
-    });
+  // GET /api/delivery/:orderId - Delivery status and ETA
+  app.get('/api/delivery/:orderId', (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const orderId = req.params.orderId as string;
+      if (!orderId) {
+        return next(new AppError(400, 'INVALID_INPUT', 'orderId parameter is required'));
+      }
+      const tracking = store.get(orderId);
+      res.status(200).json(tracking);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // POST /api/delivery/:orderId/simulate-next - Advance simulation milestone
+  app.post('/api/delivery/:orderId/simulate-next', (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const orderId = req.params.orderId as string;
+      if (!orderId) {
+        return next(new AppError(400, 'INVALID_INPUT', 'orderId parameter is required'));
+      }
+      const updated = store.simulateNext(orderId);
+      res.status(200).json(updated);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // POST /api/delivery/:orderId/status - Synchronize with external status update (e.g. restaurant actions)
+  app.post('/api/delivery/:orderId/status', (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const orderId = req.params.orderId as string;
+      const { status } = req.body as { status?: DeliveryStatus };
+      if (!orderId || !status) {
+        return next(new AppError(400, 'INVALID_INPUT', 'orderId and status are required'));
+      }
+      const updated = store.setStatus(orderId, status);
+      res.status(200).json(updated);
+    } catch (err) {
+      next(err);
+    }
   });
 
   // 404 handler
