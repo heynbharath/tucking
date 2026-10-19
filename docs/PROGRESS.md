@@ -12,7 +12,7 @@ Update this file at the end of every milestone.
 | Milestone | Status | Validation | Notes |
 |---|---|---|---|
 | M0 Repository and decisions | Completed | `git status`, `git remote -v` | Clean repo setup, .gitignore & .editorconfig configured |
-| M1 Service skeletons | Not started | — | — |
+| M1 Service skeletons | Completed | `npm run typecheck`, `npm test`, `npm run build`, `npm run lint` | Express skeletons with health/ready probes & metrics, Vite React TS frontend, and OpenAPI 3.0 spec |
 | M2 Menu and browse | Not started | — | — |
 | M3 Order correctness | Not started | — | — |
 | M4 Delivery simulation | Not started | — | — |
