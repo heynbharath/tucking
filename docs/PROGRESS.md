@@ -20,6 +20,6 @@ Update this file at the end of every milestone.
 | M6 GitHub Actions CI | Completed | GitHub Workflows, ActionLint syntax | CI workflow (lint, typecheck, test, coverage gate, build, Trivy scan) + Tag release publishing + PR pricing template |
 | M7 Kubernetes and Helm | Completed | `helm lint`, `helm template` (dev & prod) | Parameterized Helm chart with dev/staging/prod values, Ingress, Deployments, Services, and Order Service HPA |
 | M8 Canary rollout | Completed | `helm template -f values-canary.yaml`, unit tests | Nginx Ingress 20% weighted routing, FEATURE_AI_ETA_ENABLED flag, x-track-version verification, and rollback runbook |
-| M9 Observability and load test | Not started | — | — |
+| M9 Observability and load test | Completed | Prometheus config, alert rules, Grafana dashboard, load test | Prometheus scrape configs & HighOrderFailureRate alerts, Grafana dashboard JSON, and automated peak-load test suite |
 | M10 Terraform and Ansible | Not started | — | — |
 | M11 Final evidence | Not started | — | — |
