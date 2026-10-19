@@ -16,7 +16,7 @@ Update this file at the end of every milestone.
 | M2 Menu and browse | Completed | `npm run typecheck`, `npm test`, `npm run build`, `npm run lint` | Deterministic seed data, restaurant & menu endpoints with unit tests, responsive customer browse UI |
 | M3 Order correctness | Completed | `npm run typecheck`, `npm test` (coverage >91%), `npm run build` | Server-side totals in integer paise, idempotency, status transitions, 91.6% coverage gate passed |
 | M4 Delivery simulation | Completed | `npm run typecheck`, `npm test`, `npm run build`, `npm run lint` | Delivery ETA simulation milestones, restaurant operator view, end-to-end browse -> place -> track workflow |
-| M5 Containers and Compose | Not started | — | — |
+| M5 Containers and Compose | Completed | `docker compose config`, Dockerfiles, .dockerignore | Multi-stage, non-root Dockerfiles for 3 services + Nginx frontend proxy, full docker-compose.yml with health checks |
 | M6 GitHub Actions CI | Not started | — | — |
 | M7 Kubernetes and Helm | Not started | — | — |
 | M8 Canary rollout | Not started | — | — |
