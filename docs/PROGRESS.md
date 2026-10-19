@@ -21,5 +21,5 @@ Update this file at the end of every milestone.
 | M7 Kubernetes and Helm | Completed | `helm lint`, `helm template` (dev & prod) | Parameterized Helm chart with dev/staging/prod values, Ingress, Deployments, Services, and Order Service HPA |
 | M8 Canary rollout | Completed | `helm template -f values-canary.yaml`, unit tests | Nginx Ingress 20% weighted routing, FEATURE_AI_ETA_ENABLED flag, x-track-version verification, and rollback runbook |
 | M9 Observability and load test | Completed | Prometheus config, alert rules, Grafana dashboard, load test | Prometheus scrape configs & HighOrderFailureRate alerts, Grafana dashboard JSON, and automated peak-load test suite |
-| M10 Terraform and Ansible | Not started | — | — |
+| M10 Terraform and Ansible | Completed | `tofu fmt -check`, `tofu validate`, `ansible-playbook --syntax-check`, dry-run check | Terraform/OpenTofu modules with dev/staging/prod tfvars.example, Ansible delivery log retention playbook with dry-run and cron |
 | M11 Final evidence | Not started | — | — |
