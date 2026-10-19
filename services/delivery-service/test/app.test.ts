@@ -92,4 +92,26 @@ describe('Delivery Simulation & Tracking', () => {
     expect(res.body.status).toBe('CANCELLED');
     expect(res.body.estimatedDeliveryMinutes).toBe(0);
   });
+
+  it('serves stable v1 metadata when canary flag is disabled', async () => {
+    delete process.env.CANARY_RELEASE;
+    delete process.env.FEATURE_AI_ETA_ENABLED;
+
+    const res = await request(app).get('/api/delivery/stable-order');
+    expect(res.status).toBe(200);
+    expect(res.headers['x-track-version']).toBe('v1-stable');
+    expect(res.body.etaModel).toBeUndefined();
+  });
+
+  it('serves enhanced v2 canary metadata and headers when canary feature flag is enabled', async () => {
+    process.env.FEATURE_AI_ETA_ENABLED = 'true';
+
+    const res = await request(app).get('/api/delivery/canary-order');
+    expect(res.status).toBe(200);
+    expect(res.headers['x-track-version']).toBe('v2-canary-eta');
+    expect(res.body.etaModel).toBe('ai-traffic-aware-v2');
+    expect(res.body.confidenceScore).toBe(0.94);
+
+    delete process.env.FEATURE_AI_ETA_ENABLED;
+  });
 });

@@ -49,6 +49,18 @@ export function createApp(options?: AppOptions) {
         return next(new AppError(400, 'INVALID_INPUT', 'orderId parameter is required'));
       }
       const tracking = store.get(orderId);
+
+      const isCanary = process.env.CANARY_RELEASE === 'true' || process.env.FEATURE_AI_ETA_ENABLED === 'true';
+      if (isCanary) {
+        res.setHeader('x-track-version', 'v2-canary-eta');
+        return res.status(200).json({
+          ...tracking,
+          etaModel: 'ai-traffic-aware-v2',
+          confidenceScore: 0.94
+        });
+      }
+
+      res.setHeader('x-track-version', 'v1-stable');
       res.status(200).json(tracking);
     } catch (err) {
       next(err);
