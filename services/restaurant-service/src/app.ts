@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { randomUUID } from 'crypto';
+import { SEED_RESTAURANTS, SEED_MENU_ITEMS } from './data.js';
 
 export class AppError extends Error {
   constructor(
@@ -34,9 +35,34 @@ export function createApp() {
     res.status(200).json({ status: 'ready', service: 'restaurant-service' });
   });
 
-  // API Stub
+  // API Routes
   app.get('/api/restaurants', (_req: Request, res: Response) => {
-    res.status(200).json({ restaurants: [] });
+    res.status(200).json({ restaurants: SEED_RESTAURANTS });
+  });
+
+  app.get('/api/restaurants/:restaurantId', (req: Request, res: Response, next: NextFunction) => {
+    const restaurant = SEED_RESTAURANTS.find((r) => r.id === req.params.restaurantId);
+    if (!restaurant) {
+      return next(new AppError(404, 'RESTAURANT_NOT_FOUND', `Restaurant with ID '${req.params.restaurantId}' not found`));
+    }
+    res.status(200).json(restaurant);
+  });
+
+  app.get('/api/restaurants/:restaurantId/menu', (req: Request, res: Response, next: NextFunction) => {
+    const restaurant = SEED_RESTAURANTS.find((r) => r.id === req.params.restaurantId);
+    if (!restaurant) {
+      return next(new AppError(404, 'RESTAURANT_NOT_FOUND', `Restaurant with ID '${req.params.restaurantId}' not found`));
+    }
+    const items = SEED_MENU_ITEMS.filter((item) => item.restaurantId === req.params.restaurantId);
+    res.status(200).json({ restaurantId: restaurant.id, items });
+  });
+
+  app.get('/api/menu-items/:itemId', (req: Request, res: Response, next: NextFunction) => {
+    const item = SEED_MENU_ITEMS.find((i) => i.id === req.params.itemId);
+    if (!item) {
+      return next(new AppError(404, 'MENU_ITEM_NOT_FOUND', `Menu item with ID '${req.params.itemId}' not found`));
+    }
+    res.status(200).json(item);
   });
 
   // 404 handler

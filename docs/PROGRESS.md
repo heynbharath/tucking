@@ -13,7 +13,7 @@ Update this file at the end of every milestone.
 |---|---|---|---|
 | M0 Repository and decisions | Completed | `git status`, `git remote -v` | Clean repo setup, .gitignore & .editorconfig configured |
 | M1 Service skeletons | Completed | `npm run typecheck`, `npm test`, `npm run build`, `npm run lint` | Express skeletons with health/ready probes & metrics, Vite React TS frontend, and OpenAPI 3.0 spec |
-| M2 Menu and browse | Not started | — | — |
+| M2 Menu and browse | Completed | `npm run typecheck`, `npm test`, `npm run build`, `npm run lint` | Deterministic seed data, restaurant & menu endpoints with unit tests, responsive customer browse UI |
 | M3 Order correctness | Not started | — | — |
 | M4 Delivery simulation | Not started | — | — |
 | M5 Containers and Compose | Not started | — | — |
