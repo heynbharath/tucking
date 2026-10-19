@@ -18,7 +18,7 @@ Update this file at the end of every milestone.
 | M4 Delivery simulation | Completed | `npm run typecheck`, `npm test`, `npm run build`, `npm run lint` | Delivery ETA simulation milestones, restaurant operator view, end-to-end browse -> place -> track workflow |
 | M5 Containers and Compose | Completed | `docker compose config`, Dockerfiles, .dockerignore | Multi-stage, non-root Dockerfiles for 3 services + Nginx frontend proxy, full docker-compose.yml with health checks |
 | M6 GitHub Actions CI | Completed | GitHub Workflows, ActionLint syntax | CI workflow (lint, typecheck, test, coverage gate, build, Trivy scan) + Tag release publishing + PR pricing template |
-| M7 Kubernetes and Helm | Not started | — | — |
+| M7 Kubernetes and Helm | Completed | `helm lint`, `helm template` (dev & prod) | Parameterized Helm chart with dev/staging/prod values, Ingress, Deployments, Services, and Order Service HPA |
 | M8 Canary rollout | Not started | — | — |
 | M9 Observability and load test | Not started | — | — |
 | M10 Terraform and Ansible | Not started | — | — |
